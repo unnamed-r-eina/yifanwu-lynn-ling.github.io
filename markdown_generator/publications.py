@@ -85,6 +85,8 @@ for category, items in grouped_pubs:
         issue = clean_value(item["issue"])
         pages = clean_value(item["pages"])
         paper_url = clean_value(item["paper_url"])
+
+        md_filename = f"{authors}-{pub_date}.md"
         
         # Format Paper Link
         paper_link = f" [Paper]({paper_url})" if pd.notna(paper_url) and paper_url else ""
@@ -93,9 +95,12 @@ for category, items in grouped_pubs:
         citation = f"- {authors} ({pub_date}). *{title}.* {journal}, {volume}{issue}, {pages}.{paper_link}"
         
         md_content += citation + "\n"
-
+        
+        # Save each publication as a separate Markdown file
+        output_path = f"../_publications/{md_filename}"
+        print(f"Saving file: {output_path}")  # Debugging print statement
+        
+        with open(output_path, 'w') as f:
+            f.write(md_content)
+        
     md_content += "\n"  # Space between categories
-
-# Save to Markdown file
-with open("../_pages/publications.md", "w") as f:
-    f.write(md_content)

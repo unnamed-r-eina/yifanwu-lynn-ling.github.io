@@ -62,47 +62,34 @@ def html_escape(text):
 # In[5]:
 
 import os
-for row, item in publications.iterrows():
-    
-    md_filename = str(item.pub_date) + "-" + item.url_slug + ".md"
-    html_filename = str(item.pub_date) + "-" + item.url_slug
-    year = item.pub_date[:4]
-    
-    ## YAML variables
-    
-    md = "---\ntitle: \""   + item.title + '"\n'
-    
-    md += """collection: publications"""
-    
-    md += """\npermalink: /publication/""" + html_filename
-    
-    if len(str(item.excerpt)) > 5:
-        md += "\nexcerpt: '" + html_escape(item.excerpt) + "'"
-    
-    md += "\ndate: " + str(item.pub_date) 
-    
-    md += "\nvenue: '" + html_escape(item.venue) + "'"
-    
-    if len(str(item.paper_url)) > 5:
-        md += "\npaperurl: '" + item.paper_url + "'"
-    
-    md += "\ncitation: '" + html_escape(item.citation) + "'"
-    
-    md += "\n---"
-    
-    ## Markdown description for individual page
-    
-    if len(str(item.paper_url)) > 5:
-        md += "\n\n<a href='" + item.paper_url + "'>Download paper here</a>\n" 
-        
-    if len(str(item.excerpt)) > 5:
-        md += "\n" + html_escape(item.excerpt) + "\n"
-        
-    md += "\nRecommended citation: " + item.citation
-    
-    md_filename = os.path.basename(md_filename)
-       
-    with open("../_publications/" + md_filename, 'w') as f:
-        f.write(md)
 
+grouped_pubs = publications.groupby("category")
 
+md_content = "# Publications\n\n"
+
+for category, items in grouped_pubs:
+    md_content += f"## {category}\n\n"
+
+    for _, item in items.iterrows():
+        authors = item["author"]
+        title = item["title"]
+        pub_date = item["pub_date"]
+        journal = item["journal"]
+        volume = str(item["volume"]) if pd.notna(item["volume"]) else ""
+        issue = f"({int(item['issue'])})" if pd.notna(item["issue"]) else ""
+        pages = f"{item['pages']}" if pd.notna(item["pages"]) else ""
+        paper_url = item["paper_url"]
+        
+        # Format Paper Link
+        paper_link = f" [Paper]({paper_url})" if pd.notna(paper_url) and paper_url else ""
+
+        # Format as APA-style citation
+        citation = f"- {authors} ({pub_date}). *{title}.* {journal}, {volume}{issue}, {pages}.{paper_link}"
+        
+        md_content += citation + "\n"
+
+    md_content += "\n"  # Space between categories
+
+# Save to Markdown file
+with open("../_pages/publications.md", "w") as f:
+    f.write(md_content)

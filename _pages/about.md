@@ -7,8 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-Hi, my name is **<span style="color: #B57EDC;">Yifan Wu</span>**. I’m a second-year Ph.D. student in Linguistics at Cornell University, where I spend most of my time thinking about how we use and interpret language in real-time. My research interests include psycholinguistics, computational linguistics, and semantics/pragmatics. Right now, I am particularly interested in questions revolving around imprecision, scalar inferences, and adaptation. I am also interested in applying computational methods to better understand incremental themes. If any of this sounds interesting, feel free to check out my work in the **Publications**((publications/index.md))
- and **Presentations**(presentations/index.md) tabs above!
+Hi, my name is **<span style="color: #B57EDC;">Yifan Wu</span>**. I’m a second-year Ph.D. student in Linguistics at Cornell University, where I spend most of my time thinking about how we use and interpret language in real-time. My research interests include psycholinguistics, computational linguistics, and semantics/pragmatics. Right now, I am particularly interested in questions revolving around imprecision, scalar inferences, and adaptation. I am also interested in applying computational methods to better understand incremental themes. If any of this sounds interesting, feel free to check out my work in the **Publications[]** and **Presentations[]** tabs above!
 
 I am a member of the [Linguistic Meaning (LiMe) Lab](https://lime-lab-cornell.github.io/) under [Prof. Helena Aparicio](https://lime-lab-cornell.github.io/HelenaWebsite/index.html) and the [Computational Psycholinguistics Discussion Group (C.Psyd)](https://c-psyd.github.io/) under [Prof. Maten van Schijndel](https://vansky.github.io/).
 

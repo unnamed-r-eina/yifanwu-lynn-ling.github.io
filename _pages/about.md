@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "<span style="color: #E6E6FA;">7</span>"
+title: '<span style="color: #E6E6FA;">7</span>'
 author_profile: true
 redirect_from: 
   - /about/

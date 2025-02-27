@@ -9,7 +9,7 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default"
-title                    : "Your Name / Site Title"
+title                    : "<span style='color: #B57EDC;'>Yifan Wu</span>"
 title_separator          : "-"
 name                     : &name "Your Name"
 description              : &description "personal description"
@@ -23,7 +23,7 @@ repository               : "academicpages/academicpages.github.io"
 author:
   # Biographic information
   avatar           : "profile.png"
-  name             : '<span style="color: #B57EDC;">Yifan Wu</span>'
+  name             : "<span style='color: #B57EDC;'>Yifan Wu</span>"
   pronouns         : "she/her"  
   bio              : "2nd-year Ph.D. in Ling @ Cornell, working on psycholinguistics, computatioanl linguistics, and semantics/pragmatics."
   location         : "Ithaca, New York"

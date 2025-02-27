@@ -68,18 +68,22 @@ grouped_pubs = publications.groupby("category")
 
 md_content = "# Publications\n\n"
 
+def clean_value(value):
+    """Replace '--' with an empty string."""
+    return "" if pd.isna(value) or value == "--" else str(value)
+
 for category, items in grouped_pubs:
     md_content += f"## {category}\n\n"
 
     for _, item in items.iterrows():
-        authors = item["authors"]
-        title = item["title"]
-        pub_date = item["pub_date"]
-        journal = item["journal"]
-        volume = str(item["volume"]) if pd.notna(item["volume"]) else ""
-        issue = f"({int(item['issue'])})" if pd.notna(item["issue"]) else ""
-        pages = f"{item['pages']}" if pd.notna(item["pages"]) else ""
-        paper_url = item["paper_url"]
+        authors = clean_value(item["authors"])
+        title = clean_value(item["title"])
+        pub_date = clean_value(item["pub_date"])
+        journal = clean_value(item["journal"])
+        volume = clean_value(item["volume"])
+        issue = f"({int(item['issue'])})" if clean_value(item["issue"]).isdigit() else ""
+        pages = clean_value(item["pages"])
+        paper_url = clean_value(item["paper_url"])
         
         # Format Paper Link
         paper_link = f" [Paper]({paper_url})" if pd.notna(paper_url) and paper_url else ""

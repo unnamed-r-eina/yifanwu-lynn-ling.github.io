@@ -81,7 +81,7 @@ for category, items in grouped_pubs:
         pub_date = clean_value(item["pub_date"])
         journal = clean_value(item["journal"])
         volume = clean_value(item["volume"])
-        issue = f"({int(item['issue'])})" if clean_value(item["issue"]).isdigit() else ""
+        issue = clean_value(item["issue"])
         pages = clean_value(item["pages"])
         paper_url = clean_value(item["paper_url"])
         

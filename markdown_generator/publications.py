@@ -71,7 +71,7 @@ for category, items in grouped_pubs:
     md_content += f"## {category}\n\n"
 
     for _, item in items.iterrows():
-        authors = item["author"]
+        authors = item["authors"]
         title = item["title"]
         pub_date = item["pub_date"]
         journal = item["journal"]

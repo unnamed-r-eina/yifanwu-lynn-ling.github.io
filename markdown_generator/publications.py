@@ -62,6 +62,7 @@ def html_escape(text):
 # In[5]:
 
 import os
+print(publications.columns)
 
 grouped_pubs = publications.groupby("category")
 

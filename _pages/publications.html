@@ -13,7 +13,7 @@ author_profile: true
 
 <!-- <h1>Publications</h1> -->
 
-<!-- <h2>Debugging Publications</h2>
+<h2>Debugging Publications</h2>
 <ul>
   {% for pub in site.publications %}
     <li>{{ pub.title }} (Category: {{ pub.category }})</li>
@@ -31,7 +31,7 @@ author_profile: true
   {% else %}
     <p>No categories found.</p>
   {% endfor %}
-</ul> -->
+</ul>
 
 <h2>Debugging `_config.yml` Categories</h2>
 <ul>
@@ -41,6 +41,10 @@ author_profile: true
     <p>No categories found from `_config.yml`.</p>
   {% endfor %}
 </ul>
+
+<h2>Debugging `_config.yml`</h2>
+<pre>{{ site.publication_category | jsonify }}</pre>
+
 
 
 {% assign grouped_pubs = site.publications | group_by: "category" %}

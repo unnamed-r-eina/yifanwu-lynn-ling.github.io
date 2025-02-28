@@ -39,7 +39,7 @@ author_profile: true
       {% for item in sorted_pubs %}
         <p>
           {% if item.authors %}
-            <strong>{{ item.authors }}</strong>
+           {{ item.authors }}
             {% if item.pub_date %} ({{ item.pub_date }}){% endif %}.
           {% elsif item.pub_date %}
             ({{ item.pub_date }}).

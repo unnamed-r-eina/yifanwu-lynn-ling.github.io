@@ -33,6 +33,16 @@ author_profile: true
   {% endfor %}
 </ul> -->
 
+<h2>Debugging `_config.yml` Categories</h2>
+<ul>
+  {% for category_key in site.publication_category.keys %}
+    <li>Key: {{ category_key }}, Title: {{ site.publication_category[category_key].title }}</li>
+  {% else %}
+    <p>No categories found from `_config.yml`.</p>
+  {% endfor %}
+</ul>
+
+
 {% assign grouped_pubs = site.publications | group_by: "category" %}
 
 <!-- Loop through categories as defined in _config.yml -->

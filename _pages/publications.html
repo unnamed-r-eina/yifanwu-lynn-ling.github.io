@@ -12,12 +12,12 @@ author_profile: true
 {% assign grouped_pubs = site.publications | group_by: "category" %}
 
 <!-- <!-- Debugging: Print detected categories -->
-<h2>Debugging Grouped Publications</h2>
+<!-- <h2>Debugging Grouped Publications</h2>
 <ul>
   {% for pub_group in grouped_pubs %}
     <li>Category Found: {{ pub_group.name }} (Contains {{ pub_group.items | size }} publications)</li>
   {% endfor %}
-</ul> -->
+</ul> --> -->
 
 <!-- Loop through categories in the correct order -->
 {% for category_key in category_order %}
@@ -39,7 +39,7 @@ author_profile: true
       {% for item in sorted_pubs %}
         <p>
           {% if item.authors %}
-           {{ item.authors }}
+      {{ item.authors | replace: "**", "<strong>" | replace: "**", "</strong>" }}
             {% if item.pub_date %} ({{ item.pub_date }}){% endif %}.
           {% elsif item.pub_date %}
             ({{ item.pub_date }}).

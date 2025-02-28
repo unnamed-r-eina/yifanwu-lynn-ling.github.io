@@ -47,26 +47,35 @@ author_profile: true
 
 
 
+{% assign category_order = "journal_articles,conference_proceedings,edited_volumes" | split: "," %}
 {% assign grouped_pubs = site.publications | group_by: "category" %}
 
-{% for pub_group in grouped_pubs %}
-  {% assign category_key = pub_group.name %}
-  {% assign category_title = site.publication_category[category_key].title %}
+<!-- Loop through categories in the specified order -->
+{% for category_key in category_order %}
+  {% assign pub_group = grouped_pubs | where: "name", category_key | first %}
+  {% if pub_group %}
+    <h2>{{ site.publication_category[category_key].title }}</h2>
+    <hr />
 
-  <h2>{{ category_title }}</h2>
-  <hr />
+    <!-- Sort publications: Forthcoming first, then descending by year -->
+    {% assign sorted_pubs = pub_group.items | sort: "pub_date" | reverse %}
 
-  {% for item in pub_group.items %}
-    <p>
-      <strong>{{ item.authors }} ({{ item.pub_date }}).</strong> 
-      <em>{{ item.title }}</em>. 
-      {{ item.journal }}{% if item.volume %}, {{ item.volume }}{% endif %}
-      {% if item.issue %}({{ item.issue }}){% endif %}
-      {% if item.pages %}, {{ item.pages }}{% endif %}.
-      {% if item.paper_url %}
-        <a href="{{ item.paper_url }}">[Paper]</a>
-      {% endif %}
-    </p>
-  {% endfor %}
+    {% for item in sorted_pubs %}
+      <p>
+        {% if item.authors %}<strong>{{ item.authors }}</strong>{% endif %}
+        {% if item.pub_date %}({{ item.pub_date }}){% endif %}.
+        
+        {% if item.title %}{{ item.title }}.{% endif %} 
+        
+        {% if item.journal %}<em>{{ item.journal }}</em>{% endif %}
+        {% if item.volume %}, {{ item.volume }}{% endif %}
+        {% if item.issue %}({{ item.issue }}){% endif %}
+        {% if item.pages %}, {{ item.pages }}{% endif %}.
+        
+        {% if item.paper_url %}
+          <a href="{{ item.paper_url }}">[Paper]</a>
+        {% endif %}
+      </p>
+    {% endfor %}
+  {% endif %}
 {% endfor %}
-

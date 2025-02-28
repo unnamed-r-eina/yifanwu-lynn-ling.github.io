@@ -27,16 +27,15 @@ author_profile: true
   {% assign found_category = false %}
 
   {% for pub_group in grouped_pubs %}
-    {% if pub_group.name == category_key %}
+    {% assign normalized_pub_group = pub_group.name | downcase | replace: " ", "_" %}
+    {% if normalized_pub_group == category_key %}
       {% assign found_category = true %}
-      
+
       <!-- Sort publications: Forthcoming first, then descending by year -->
       {% assign sorted_pubs = pub_group.items | sort: "pub_date" | reverse %}
 
-      <!-- Loop through each publication -->
       {% for item in sorted_pubs %}
         <p>
-          <!-- Handle Authors -->
           {% if item.authors %}
             <strong>{{ item.authors }}</strong>
             {% if item.pub_date %} ({{ item.pub_date }}){% endif %}.
@@ -44,12 +43,10 @@ author_profile: true
             ({{ item.pub_date }}).
           {% endif %}
 
-          <!-- Handle Title -->
           {% if item.title %}
             {{ item.title }}.
           {% endif %}
 
-          <!-- Handle Journal -->
           {% if item.journal %}
             <em>{{ item.journal }}</em>
             {% if item.volume %}, {{ item.volume }}{% endif %}
@@ -57,7 +54,6 @@ author_profile: true
             {% if item.pages %}, {{ item.pages }}{% endif %}.
           {% endif %}
 
-          <!-- Handle Paper Link -->
           {% if item.paper_url %}
             <a href="{{ item.paper_url }}">[Paper]</a>
           {% endif %}

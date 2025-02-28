@@ -77,14 +77,15 @@ author:
 
 # Publication Category - The following the list of publication categories and their headings
 publication_category:
-  books:
-    title: 'Books'
-  journal_articles:
-    title: 'Journal Articles'    
   conference_proceedings:
-    title: 'Conference Proceedings'
+    title: "Conference Proceedings"
+  journal_articles:
+    title: "Journal Articles"
   edited_volumes:
     title: "Edited Volumes"
+  books:
+    title: "Books"
+
 
 # Site Settings
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"

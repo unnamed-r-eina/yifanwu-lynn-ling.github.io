@@ -21,15 +21,17 @@ author_profile: true
 
 <!-- Loop through categories in the correct order -->
 {% for category_key in category_order %}
-  <h2>{{ site.publication_category[category_key].title }}</h2>
-  <hr />
-
   {% assign found_category = false %}
 
   {% for pub_group in grouped_pubs %}
     {% assign normalized_pub_group = pub_group.name | downcase | replace: " ", "_" %}
+    
     {% if normalized_pub_group == category_key %}
       {% assign found_category = true %}
+      
+      <!-- Only print the category heading if there are publications -->
+      <h2>[<a href="#{{ category_key }}">{{ site.publication_category[category_key].title }}</a>]</h2>
+<hr />
 
       <!-- Sort publications: Forthcoming first, then descending by year -->
       {% assign sorted_pubs = pub_group.items | sort: "pub_date" | reverse %}
@@ -62,7 +64,5 @@ author_profile: true
     {% endif %}
   {% endfor %}
 
-  {% if found_category == false %}
-    <p><em>No publications available in this category.</em></p>
-  {% endif %}
+  <!-- If no publications were found, do NOT print the category -->
 {% endfor %}

@@ -34,7 +34,7 @@ author_profile: true
           {% if item.authors %}
             {% assign bold_authors = item.authors | replace: "**", "<strong>" | replace: "**", "</strong>" %}
             {{ bold_authors }}
-            {% if item.pub_date %} ({{ item.pub_date }}){% endif %}.
+          {% if item.pub_date %}. ({{ item.pub_date }}){% endif %}
           {% elsif item.pub_date %}
             ({{ item.pub_date }}).
           {% endif %}

@@ -7,9 +7,7 @@ author_profile: true
 
 {% include base_path %}
 
-<h1>Publications</h1>
-
-<!-- Define category order -->
+<!-- Define category order explicitly -->
 {% assign category_order = "journal_articles|conference_proceedings|edited_volumes" | split: "|" %}
 {% assign grouped_pubs = site.publications | group_by: "category" %}
 
@@ -23,47 +21,52 @@ author_profile: true
 
 <!-- Loop through categories in the correct order -->
 {% for category_key in category_order %}
-  {% assign pub_group = grouped_pubs | where: "name", category_key | first %}
-
-  <!-- Print the category heading -->
   <h2>{{ site.publication_category[category_key].title }}</h2>
   <hr />
 
-  {% if pub_group and pub_group.items.size > 0 %}
-    <!-- Sort publications: Forthcoming first, then descending by year -->
-    {% assign sorted_pubs = pub_group.items | sort: "pub_date" | reverse %}
+  {% assign found_category = false %}
 
-    <!-- Loop through each publication -->
-    {% for item in sorted_pubs %}
-      <p>
-        <!-- Handle Authors -->
-        {% if item.authors %}
-          <strong>{{ item.authors }}</strong>
-          {% if item.pub_date %} ({{ item.pub_date }}){% endif %}.
-        {% elsif item.pub_date %}
-          ({{ item.pub_date }}).
-        {% endif %}
+  {% for pub_group in grouped_pubs %}
+    {% if pub_group.name == category_key %}
+      {% assign found_category = true %}
+      
+      <!-- Sort publications: Forthcoming first, then descending by year -->
+      {% assign sorted_pubs = pub_group.items | sort: "pub_date" | reverse %}
 
-        <!-- Handle Title -->
-        {% if item.title %}
-          {{ item.title }}.
-        {% endif %}
+      <!-- Loop through each publication -->
+      {% for item in sorted_pubs %}
+        <p>
+          <!-- Handle Authors -->
+          {% if item.authors %}
+            <strong>{{ item.authors }}</strong>
+            {% if item.pub_date %} ({{ item.pub_date }}){% endif %}.
+          {% elsif item.pub_date %}
+            ({{ item.pub_date }}).
+          {% endif %}
 
-        <!-- Handle Journal -->
-        {% if item.journal %}
-          <em>{{ item.journal }}</em>
-          {% if item.volume %}, {{ item.volume }}{% endif %}
-          {% if item.issue %}({{ item.issue }}){% endif %}
-          {% if item.pages %}, {{ item.pages }}{% endif %}.
-        {% endif %}
+          <!-- Handle Title -->
+          {% if item.title %}
+            {{ item.title }}.
+          {% endif %}
 
-        <!-- Handle Paper Link -->
-        {% if item.paper_url %}
-          <a href="{{ item.paper_url }}">[Paper]</a>
-        {% endif %}
-      </p>
-    {% endfor %}
-  {% else %}
+          <!-- Handle Journal -->
+          {% if item.journal %}
+            <em>{{ item.journal }}</em>
+            {% if item.volume %}, {{ item.volume }}{% endif %}
+            {% if item.issue %}({{ item.issue }}){% endif %}
+            {% if item.pages %}, {{ item.pages }}{% endif %}.
+          {% endif %}
+
+          <!-- Handle Paper Link -->
+          {% if item.paper_url %}
+            <a href="{{ item.paper_url }}">[Paper]</a>
+          {% endif %}
+        </p>
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+
+  {% if found_category == false %}
     <p><em>No publications available in this category.</em></p>
   {% endif %}
 {% endfor %}

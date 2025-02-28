@@ -11,14 +11,6 @@ author_profile: true
 {% assign category_order = "journal_articles|conference_proceedings|edited_volumes" | split: "|" %}
 {% assign grouped_pubs = site.publications | group_by: "category" %}
 
-<!-- <!-- Debugging: Print detected categories -->
-<!-- <h2>Debugging Grouped Publications</h2>
-<ul>
-  {% for pub_group in grouped_pubs %}
-    <li>Category Found: {{ pub_group.name }} (Contains {{ pub_group.items | size }} publications)</li>
-  {% endfor %}
-</ul> --> -->
-
 <!-- Loop through categories in the correct order -->
 {% for category_key in category_order %}
   {% assign found_category = false %}
@@ -28,27 +20,31 @@ author_profile: true
     
     {% if normalized_pub_group == category_key %}
       {% assign found_category = true %}
-      
+
       <!-- Only print the category heading if there are publications -->
       <h2><a href="#{{ category_key }}">{{ site.publication_category[category_key].title }}</a></h2>
-<hr />
+      <hr />
 
       <!-- Sort publications: Forthcoming first, then descending by year -->
       {% assign sorted_pubs = pub_group.items | sort: "pub_date" | reverse %}
 
       {% for item in sorted_pubs %}
         <p>
+          <!-- Format authors: Make bold only names wrapped in ** -->
           {% if item.authors %}
-      {{ item.authors | replace: "**", "<strong>" | replace: "**", "</strong>" }}
+            {% assign bold_authors = item.authors | replace: "**", "<strong>" | replace: "**", "</strong>" %}
+            {{ bold_authors }}
             {% if item.pub_date %} ({{ item.pub_date }}){% endif %}.
           {% elsif item.pub_date %}
             ({{ item.pub_date }}).
           {% endif %}
 
+          <!-- Format title -->
           {% if item.title %}
             {{ item.title }}.
           {% endif %}
 
+          <!-- Format journal, volume, issue, pages -->
           {% if item.journal %}
             <em>{{ item.journal }}</em>
             {% if item.volume %}, {{ item.volume }}{% endif %}
@@ -56,6 +52,7 @@ author_profile: true
             {% if item.pages %}, {{ item.pages }}{% endif %}.
           {% endif %}
 
+          <!-- Format paper URL -->
           {% if item.paper_url %}
             <a href="{{ item.paper_url }}">[Paper]</a>
           {% endif %}
@@ -63,6 +60,4 @@ author_profile: true
       {% endfor %}
     {% endif %}
   {% endfor %}
-
-  <!-- If no publications were found, do NOT print the category -->
 {% endfor %}

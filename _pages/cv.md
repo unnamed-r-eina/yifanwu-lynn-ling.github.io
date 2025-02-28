@@ -7,4 +7,4 @@ redirect_from:
   - /resume
 ---
 
-You can find my CV here: Yifan Wu’s CV.
+Access to my CV is off the table for now :joy:

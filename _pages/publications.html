@@ -11,13 +11,13 @@ author_profile: true
 {% assign category_order = "journal_articles|conference_proceedings|edited_volumes" | split: "|" %}
 {% assign grouped_pubs = site.publications | group_by: "category" %}
 
-<!-- Debugging: Print detected categories -->
+<!-- <!-- Debugging: Print detected categories -->
 <h2>Debugging Grouped Publications</h2>
 <ul>
   {% for pub_group in grouped_pubs %}
     <li>Category Found: {{ pub_group.name }} (Contains {{ pub_group.items | size }} publications)</li>
   {% endfor %}
-</ul>
+</ul> -->
 
 <!-- Loop through categories in the correct order -->
 {% for category_key in category_order %}

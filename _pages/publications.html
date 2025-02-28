@@ -7,38 +7,27 @@ author_profile: true
 
 {% include base_path %}
 
+<h1>Publications</h1>
+
 <!-- Define category order explicitly -->
 {% assign category_order = "journal_articles|conference_proceedings|edited_volumes" | split: "|" %}
 {% assign grouped_pubs = site.publications | group_by: "category" %}
 
-<!-- Debugging: Check `_config.yml` Categories -->
-<h2>Debugging `_config.yml` Categories</h2>
+<!-- Debugging: Print detected categories -->
+<h2>Debugging Grouped Publications</h2>
 <ul>
-  {% for category_key in site.publication_category.keys %}
-    <li>Config Category: {{ category_key }} - {{ site.publication_category[category_key].title }}</li>
+  {% for pub_group in grouped_pubs %}
+    <li>Category Found: {{ pub_group.name }} (Contains {{ pub_group.items | size }} publications)</li>
   {% endfor %}
 </ul>
 
-<!-- Debugging: Print category order -->
-<h2>Debugging Category Order</h2>
-<ul>
-  {% for category_key in category_order %}
-    <li>Category Key: {{ category_key }}</li>
-  {% endfor %}
-</ul>
-
-<!-- Loop through categories in the specified order -->
+<!-- Loop through categories in the correct order -->
 {% for category_key in category_order %}
-  {% assign pub_group = grouped_pubs | where: "name", category_key | first %}
-  {% if pub_group %}
+  {% for pub_group in grouped_pubs %}
+    {% if pub_group.name == category_key %}
 
-      <!-- Print category title -->
-      {% if site.publication_category[category_key] %}
-        <h2>{{ site.publication_category[category_key].title }}</h2>
-      {% else %}
-        <h2>Unknown Category: {{ category_key }}</h2>
-      {% endif %}
-      
+      <!-- Print the category heading (this was missing before) -->
+      <h2>{{ site.publication_category[category_key].title }}</h2>
       <hr />
 
       <!-- Sort publications: Forthcoming first, then descending by year -->

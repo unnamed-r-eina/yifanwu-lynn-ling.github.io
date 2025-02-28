@@ -22,6 +22,18 @@ author_profile: true
   {% endfor %}
 </ul>
 
+<h2>Debugging Grouped Publications</h2>
+<ul>
+  {% assign grouped_pubs = site.publications | group_by: "category" %}
+  
+  {% for pub_group in grouped_pubs %}
+    <li>Category Found: {{ pub_group.name }}</li>
+  {% else %}
+    <p>No categories found.</p>
+  {% endfor %}
+</ul>
+
+
 
 {% assign grouped_pubs = site.publications | group_by: "category" %}
 

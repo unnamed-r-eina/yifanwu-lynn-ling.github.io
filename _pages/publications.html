@@ -29,8 +29,8 @@ author_profile: true
 
 <!-- Loop through categories in the specified order -->
 {% for category_key in category_order %}
-  {% for pub_group in grouped_pubs %}
-    {% if pub_group.name == category_key %}
+  {% assign pub_group = grouped_pubs | where: "name", category_key | first %}
+  {% if pub_group %}
 
       <!-- Print category title -->
       {% if site.publication_category[category_key] %}

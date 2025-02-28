@@ -13,7 +13,7 @@ author_profile: true
 
 <!-- <h1>Publications</h1> -->
 
-<h2>Debugging Publications</h2>
+<!-- <h2>Debugging Publications</h2>
 <ul>
   {% for pub in site.publications %}
     <li>{{ pub.title }} (Category: {{ pub.category }})</li>
@@ -21,8 +21,8 @@ author_profile: true
     <p>No publications found.</p>
   {% endfor %}
 </ul>
-
-<h2>Debugging Grouped Publications</h2>
+ -->
+<!-- <h2>Debugging Grouped Publications</h2>
 <ul>
   {% assign grouped_pubs = site.publications | group_by: "category" %}
   
@@ -31,26 +31,24 @@ author_profile: true
   {% else %}
     <p>No categories found.</p>
   {% endfor %}
-</ul>
-
-
+</ul> -->
 
 {% assign grouped_pubs = site.publications | group_by: "category" %}
 
-{% for category in site.publication_category %}
-  {% assign category_key = category[0] %}
-  {% assign category_title = category[1].title %}
-  
+<!-- Loop through categories as defined in _config.yml -->
+{% for category_key in site.publication_category.keys %}
+  {% assign category_title = site.publication_category[category_key].title %}
+
   {% for pub_group in grouped_pubs %}
     {% if pub_group.name == category_key %}
       <h2>{{ category_title }}</h2>
       <hr />
-      
+
       {% for item in pub_group.items %}
         <p>
           <strong>{{ item.authors }} ({{ item.pub_date }}).</strong> 
           <em>{{ item.title }}</em>. 
-          {{ item.journal }}, {{ item.volume }}
+          {{ item.journal }}{% if item.volume %}, {{ item.volume }}{% endif %}
           {% if item.issue %}({{ item.issue }}){% endif %}
           {% if item.pages %}, {{ item.pages }}{% endif %}.
           {% if item.paper_url %}

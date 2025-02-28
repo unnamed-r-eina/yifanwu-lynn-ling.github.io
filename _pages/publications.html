@@ -7,6 +7,11 @@ author_profile: true
 
 {% include base_path %}
 
+<!-- Define category order explicitly -->
+{% assign category_order = "journal_articles|conference_proceedings|edited_volumes" | split: "|" %}
+{% assign grouped_pubs = site.publications | group_by: "category" %}
+
+<!-- Debugging: Check `_config.yml` Categories -->
 <h2>Debugging `_config.yml` Categories</h2>
 <ul>
   {% for category_key in site.publication_category.keys %}
@@ -14,26 +19,32 @@ author_profile: true
   {% endfor %}
 </ul>
 
-<h2>Debugging Raw `category_order`</h2>
-<pre>{{ category_order | jsonify }}</pre>
+<!-- Debugging: Print category order -->
+<h2>Debugging Category Order</h2>
+<ul>
+  {% for category_key in category_order %}
+    <li>Category Key: {{ category_key }}</li>
+  {% endfor %}
+</ul>
 
 <!-- Loop through categories in the specified order -->
-{% assign category_order = "journal_articles|conference_proceedings|edited_volumes" | split: "|" %}
 {% for category_key in category_order %}
   {% for pub_group in grouped_pubs %}
     {% if pub_group.name == category_key %}
 
+      <!-- Print category title -->
       {% if site.publication_category[category_key] %}
         <h2>{{ site.publication_category[category_key].title }}</h2>
       {% else %}
         <h2>Unknown Category: {{ category_key }}</h2>
       {% endif %}
-
+      
       <hr />
 
       <!-- Sort publications: Forthcoming first, then descending by year -->
       {% assign sorted_pubs = pub_group.items | sort: "pub_date" | reverse %}
 
+      <!-- Loop through each publication -->
       {% for item in sorted_pubs %}
         <p>
           {% if item.authors %}<strong>{{ item.authors }}</strong>{% endif %}
@@ -42,9 +53,9 @@ author_profile: true
           {% if item.title %}{{ item.title }}.{% endif %} 
           
           {% if item.journal %}<em>{{ item.journal }}</em>{% endif %}
-          {% if item.volume %}, {{ item.volume }}{% endif %}
-          {% if item.issue %}({{ item.issue }}){% endif %}
-          {% if item.pages %}, {{ item.pages }}{% endif %}.
+          {% if item.volume and item.journal %}, {{ item.volume }}{% endif %}
+          {% if item.issue and item.volume %}({{ item.issue }}){% endif %}
+          {% if item.pages and item.issue %}, {{ item.pages }}{% endif %}.
           
           {% if item.paper_url %}
             <a href="{{ item.paper_url }}">[Paper]</a>

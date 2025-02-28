@@ -11,7 +11,17 @@ author_profile: true
 
 {% include base_path %}
 
-<h1>Publications</h1>
+<!-- <h1>Publications</h1> -->
+
+<h2>Debugging Publications</h2>
+<ul>
+  {% for pub in site.publications %}
+    <li>{{ pub.title }} (Category: {{ pub.category }})</li>
+  {% else %}
+    <p>No publications found.</p>
+  {% endfor %}
+</ul>
+
 
 {% assign grouped_pubs = site.publications | group_by: "category" %}
 

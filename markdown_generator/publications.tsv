@@ -1,4 +1,4 @@
-pub_date  authors  title  journal  volume issue  pages  paper_url  category
-Forthcoming  **Yifan Wu**, Helena Aparicio  First-person metalinguistic disagreements update the standard of precision, both up and down  Proceedings of the 35th Semantics and Linguistic Theory (SALT35)  --  --  --  --  Conference Proceedings
-2025  **Yifan Wu**, Helena Aparicio  Proceedings of Experiments in Linguistic Meaning (ELM)  3  --  435-446  https://doi.org/10.3765/elm.3.5835  Conference Proceedings
---  --  --  Proceedings of the 34th Semantics and Linguistic Theory (SALT34)  --  --  --  --  Edited Volumes
+pub_date\tauthors\ttitlejournal\tvolume\tissue\tpages\tpaper_url\tcategory
+Forthcoming\t**Yifan	Wu**,	Helena	Aparicio\tFirst-person	metalinguistic	disagreements	update	the	standard	of	precision,	both	up	and	down\tProceedings	of	the	35th	Semantics	and	Linguistic	Theory	(SALT35)\tNaN\tNaN\tNaN\tNaN\tConference	Proceedings
+2025\t**Yifan	Wu**,	Helena	Aparicio\tProceedings	of	Experiments	in	Linguistic	Meaning	(ELM)\t3\tNaN\t435-446\tdoi\tConference	Proceedings
+NaN\tNaN\tProceedings	of	the	34th	Semantics	and	Linguistic	Theory	(SALT34)\tNaN\tNaN\tNaN\tNaN\tEdited	Volumes

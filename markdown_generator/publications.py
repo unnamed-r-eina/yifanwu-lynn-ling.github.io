@@ -35,7 +35,15 @@ import pandas as pd
 # In[3]:
 
 #publications = pd.read_csv("publications.tsv", sep="\t", header=0)
-publications = pd.read_csv("publications.tsv", sep="\t", dtype=str, engine="python")
+
+# Read the CSV file with UTF-8 encoding
+publications = pd.read_csv("pubs.csv", dtype=str, encoding="utf-8")
+
+# Debugging print to check the columns
+print("Columns found:", publications.columns)
+
+
+
 publications
 
 
@@ -69,6 +77,10 @@ grouped_pubs = publications.groupby("category")
 
 md_content = "# Publications\n\n"
 
+# Define output directory
+output_dir = "../_publications"
+os.makedirs(output_dir, exist_ok=True)  # Ensure the directory exists
+
 def clean_value(value):
     """Replace '--' with an empty string."""
     return "" if pd.isna(value) or value == "--" else str(value)
@@ -85,22 +97,32 @@ for category, items in grouped_pubs:
         issue = clean_value(item["issue"])
         pages = clean_value(item["pages"])
         paper_url = clean_value(item["paper_url"])
+        category = clean_value(item["category"])
 
-        md_filename = f"{authors}-{pub_date}.md"
+        # Construct YAML metadata
+        yaml_block = "---\n"
+        yaml_block += f'title: "{title}"\n'
+        if authors:
+            yaml_block += f'authors: "{authors}"\n'
+        if pub_date:
+            yaml_block += f'pub_date: "{pub_date}"\n'
+        if journal:
+            yaml_block += f'journal: "{journal}"\n'
+        if volume:
+            yaml_block += f'volume: "{volume}"\n'
+        if issue:
+            yaml_block += f'issue: "{issue}"\n'
+        if pages:
+            yaml_block += f'pages: "{pages}"\n'
+        if paper_url:
+            yaml_block += f'paper_url: "{paper_url}"\n'
+        yaml_block += f'category: "{category}"\n'
+        yaml_block += "---\n\n"
         
-        # Format Paper Link
-        paper_link = f" [Paper]({paper_url})" if pd.notna(paper_url) and paper_url else ""
-
-        # Format as APA-style citation
-        citation = f"- {authors} ({pub_date}). *{title}.* {journal}, {volume}{issue}, {pages}.{paper_link}"
+        filename = f"{pub_date}-{journal}.md"
+        output_path = os.path.join(output_dir, filename)
         
-        md_content += citation + "\n"
-        
-        # Save each publication as a separate Markdown file
-        output_path = f"../_publications/{md_filename}"
-        print(f"Saving file: {output_path}")  # Debugging print statement
-        
-        with open(output_path, 'w') as f:
-            f.write(md_content)
-        
-    md_content += "\n"  # Space between categories
+        # Save the markdown file
+        print(f"Saving file: {output_path}")
+        with open(output_path, 'w', encoding="utf-8") as f:
+            f.write(yaml_block)

@@ -49,27 +49,24 @@ author_profile: true
 
 {% assign grouped_pubs = site.publications | group_by: "category" %}
 
-<!-- Loop through categories as defined in _config.yml -->
-{% for category_key in site.publication_category.keys %}
+{% for pub_group in grouped_pubs %}
+  {% assign category_key = pub_group.name %}
   {% assign category_title = site.publication_category[category_key].title %}
 
-  {% for pub_group in grouped_pubs %}
-    {% if pub_group.name == category_key %}
-      <h2>{{ category_title }}</h2>
-      <hr />
+  <h2>{{ category_title }}</h2>
+  <hr />
 
-      {% for item in pub_group.items %}
-        <p>
-          <strong>{{ item.authors }} ({{ item.pub_date }}).</strong> 
-          <em>{{ item.title }}</em>. 
-          {{ item.journal }}{% if item.volume %}, {{ item.volume }}{% endif %}
-          {% if item.issue %}({{ item.issue }}){% endif %}
-          {% if item.pages %}, {{ item.pages }}{% endif %}.
-          {% if item.paper_url %}
-            <a href="{{ item.paper_url }}">[Paper]</a>
-          {% endif %}
-        </p>
-      {% endfor %}
-    {% endif %}
+  {% for item in pub_group.items %}
+    <p>
+      <strong>{{ item.authors }} ({{ item.pub_date }}).</strong> 
+      <em>{{ item.title }}</em>. 
+      {{ item.journal }}{% if item.volume %}, {{ item.volume }}{% endif %}
+      {% if item.issue %}({{ item.issue }}){% endif %}
+      {% if item.pages %}, {{ item.pages }}{% endif %}.
+      {% if item.paper_url %}
+        <a href="{{ item.paper_url }}">[Paper]</a>
+      {% endif %}
+    </p>
   {% endfor %}
 {% endfor %}
+
